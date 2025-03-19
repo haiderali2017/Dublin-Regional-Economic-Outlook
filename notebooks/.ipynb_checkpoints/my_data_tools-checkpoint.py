@@ -63,32 +63,32 @@ def data_clean(df, transformations):
     # return the processed dataset
     return df
 
-def missingno_plot(df):
-    msno.matrix(df)
-    plt.show()
-
-def visualize_data(df, x, y, chart_type, title, y_axis_label):
+def visualize_data(df, customizations):
     """
-    Creates a Plotly visualization for the given dataset.
-
-    Parameters:
-    df (pd.DataFrame): The dataset to visualize.
-    x (str): Column name for the x-axis.
-    y (str): Column name for the y-axis.
-    chart_type (str): Type of chart ('line', 'bar', 'scatter').
-    title (str, optional): Title of the chart.
-
-    Returns:
-    plotly.graph_objects.Figure: The generated figure.
-    """
+    #     Creates a Plotly visualization for the given dataset.
+    
+    #     Parameters:
+    #     df (pd.DataFrame): The dataset to visualize.
+    #     customizations (dictionary): It contains all sorts of desired data and modifications to make in the figure.
+    
+    #     Returns:
+    #     plotly.graph_objects.Figure: The generated figure.
+    #     """
+        
+    x = customizations['x_column']
+    y = customizations['y_column']
+    chart_type = customizations['chart_type']
+    title = customizations['title']
+    y_axis_label = customizations['y_axis_label']
+    color_discrete_map = customizations['color_discrete_map']
     
     # Choose the correct chart type
     if chart_type == "line":
-        fig = px.line(df, x=x, y=y, title=title)
+        fig = px.line(df, x=x, y=y, title=title, color_discrete_map=color_discrete_map)
     elif chart_type == "bar":
-        fig = px.bar(df, x=x, y=y, title=title)
+        fig = px.bar(df, x=x, y=y, title=title, color_discrete_map=color_discrete_map)
     elif chart_type == "scatter":
-        fig = px.scatter(df, x=x, y=y, title=title)
+        fig = px.scatter(df, x=x, y=y, title=title, color_discrete_map=color_discrete_map)
     else:
         raise ValueError("Invalid chart_type. Choose from 'line', 'bar', or 'scatter'.")
 
@@ -99,6 +99,7 @@ def visualize_data(df, x, y, chart_type, title, y_axis_label):
         )
     
     return fig
+
 
 def create_heatmap(df, metrics, columns, x):
     """
